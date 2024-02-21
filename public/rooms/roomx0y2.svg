@@ -1,0 +1,19 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="540" width="1920" height="540" fill="black"/>
+<rect width="1920" height="540" fill="white" fill-opacity="0.85"/>
+<line x1="72" y1="554" x2="836" y2="554" stroke="black" stroke-width="8"/>
+<mask id="path-4-inside-1_29_597" fill="white">
+<path d="M0 0H1920V540H0V0Z"/>
+</mask>
+<path d="M0 0H1920V540H0V0Z" fill="white"/>
+<path d="M1915 0V540H1925V0H1915ZM5 540V0H-5V540H5Z" fill="black" mask="url(#path-4-inside-1_29_597)"/>
+<rect x="337" y="128" width="445" height="412" fill="#202020"/>
+<rect x="1224.5" y="4.5" width="348" height="531" fill="white" stroke="black" stroke-width="9"/>
+<rect x="1224.5" y="113.5" width="348" height="440" fill="white" stroke="black" stroke-width="9"/>
+<rect x="1224.5" y="209.5" width="348" height="403" fill="white" stroke="black" stroke-width="9"/>
+<rect x="1224.5" y="306.5" width="348" height="340" fill="white" stroke="black" stroke-width="9"/>
+<rect x="1224.5" y="402.5" width="348" height="324" fill="white" stroke="black" stroke-width="9"/>
+<rect x="1224.5" y="520.5" width="348" height="324" fill="white" stroke="black" stroke-width="9"/>
+<rect x="1224.5" y="631.5" width="348" height="213" fill="white" stroke="black" stroke-width="9"/>
+<rect x="1224.5" y="735.5" width="348" height="127" fill="white" stroke="black" stroke-width="9"/>
+</svg>

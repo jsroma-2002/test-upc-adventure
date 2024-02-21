@@ -1,4 +1,7 @@
 "use client";
+import { isOnLimit } from "@/lib/rooms/utils";
+import { getRoomByCoordinates } from "@/services/rooms/room-service";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect } from "react";
 
@@ -32,13 +35,25 @@ export default function RoomsPage() {
   //move with arrow keys
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowUp" || e.key === "w") {
+      if (
+        (e.key === "ArrowUp" || e.key === "w") &&
+        isOnLimit(parseInt(coordinateX!), parseInt(coordinateY!) + 1)
+      ) {
         handleMove("up");
-      } else if (e.key === "ArrowDown" || e.key === "s") {
+      } else if (
+        (e.key === "ArrowDown" || e.key === "s") &&
+        isOnLimit(parseInt(coordinateX!), parseInt(coordinateY!) - 1)
+      ) {
         handleMove("down");
-      } else if (e.key === "ArrowLeft" || e.key === "a") {
+      } else if (
+        (e.key === "ArrowLeft" || e.key === "a") &&
+        isOnLimit(parseInt(coordinateX!) - 1, parseInt(coordinateY!))
+      ) {
         handleMove("left");
-      } else if (e.key === "ArrowRight" || e.key === "d") {
+      } else if (
+        (e.key === "ArrowRight" || e.key === "d") &&
+        isOnLimit(parseInt(coordinateX!) + 1, parseInt(coordinateY!))
+      ) {
         handleMove("right");
       }
     };
@@ -50,13 +65,31 @@ export default function RoomsPage() {
     };
   }, [coordinateX, coordinateY, handleMove]);
 
+  const roomInfo = getRoomByCoordinates(
+    parseInt(coordinateX!),
+    parseInt(coordinateY!)
+  );
+
   return (
     <div>
-      Coordenadas: {coordinateX} / {coordinateY}
-      <button onClick={() => handleMove("up")}>Up</button>
-      <button onClick={() => handleMove("down")}>Down</button>
-      <button onClick={() => handleMove("left")}>Left</button>
-      <button onClick={() => handleMove("right")}>Right</button>
+      <main>
+        <Image
+          className="absolute w-full h-full"
+          src={roomInfo!.image}
+          alt={roomInfo!.description}
+          width={1920}
+          height={1080}
+        />
+      </main>
+      <aside>
+        <Image
+          className="absolute w-80 translate-x-5 bottom-4 hover:scale-105 transition-all cursor-pointer"
+          src={roomInfo!.minimapImg}
+          alt={roomInfo!.description}
+          width={400}
+          height={400}
+        />
+      </aside>
     </div>
   );
 }

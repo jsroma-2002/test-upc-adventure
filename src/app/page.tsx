@@ -21,10 +21,14 @@ export default function Home() {
           y disfrutar de este juego!
         </p>
         <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-          <Button size={"lg"}>Nueva Partida</Button>
-          <Button size={"lg"} variant={"secondary"}>
-            Continuar
-          </Button>
+          <Link href={"/rooms?x=0&y=0"}>
+            <Button size={"lg"}>Nueva Partida</Button>
+          </Link>
+          <Link href={"/rooms?x=1&y=1"}>
+            <Button size={"lg"} variant={"secondary"}>
+              Continuar
+            </Button>
+          </Link>
           <Link href={"tutorial"}>
             <Button size={"lg"} variant={"outline"}>
               Tutorial

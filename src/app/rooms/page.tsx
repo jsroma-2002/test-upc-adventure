@@ -1,13 +1,16 @@
 "use client";
+import CharactersDisplay from "@/components/rooms/characters-display";
 import { isOnLimit } from "@/lib/rooms/utils";
 import { getRoomByCoordinates } from "@/services/rooms/room-service";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function RoomsPage() {
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  const [useKeyboard, setUseKeyboard] = useState<boolean>(true);
 
   const coordinateX = searchParams.get("x");
   const coordinateY = searchParams.get("y");
@@ -34,6 +37,8 @@ export default function RoomsPage() {
 
   //move with arrow keys
   useEffect(() => {
+    if (!useKeyboard) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (
         (e.key === "ArrowUp" || e.key === "w") &&
@@ -63,7 +68,7 @@ export default function RoomsPage() {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [coordinateX, coordinateY, handleMove]);
+  }, [coordinateX, coordinateY, handleMove, useKeyboard]);
 
   const roomInfo = getRoomByCoordinates(
     parseInt(coordinateX!),
@@ -79,6 +84,11 @@ export default function RoomsPage() {
           alt={roomInfo!.description}
           width={1920}
           height={1080}
+        />
+        <CharactersDisplay
+          disableKeyboard={() => setUseKeyboard(!useKeyboard)}
+          positionX={coordinateX!}
+          positionY={coordinateY!}
         />
       </main>
       <aside>

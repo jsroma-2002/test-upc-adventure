@@ -1,4 +1,4 @@
-import { rooms } from "@/data/rooms";
+import { rooms } from "@/data/seed/rooms";
 
 export function getRoomByCoordinates(x: number, y: number) {
   const findRoom = rooms.find(

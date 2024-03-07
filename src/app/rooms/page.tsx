@@ -1,5 +1,7 @@
 "use client";
 import CharactersDisplay from "@/components/rooms/characters-display";
+import ItemsDialog from "@/components/rooms/items-dialog";
+import ObjectivesDialog from "@/components/rooms/objective-dialog";
 import { isOnLimit } from "@/lib/rooms/utils";
 import { getRoomByCoordinates } from "@/services/rooms/room-service";
 import Image from "next/image";
@@ -79,7 +81,7 @@ export default function RoomsPage() {
     <div>
       <main>
         <Image
-          className="absolute w-full h-full"
+          className="fixed w-full h-full -z-50"
           src={roomInfo!.image}
           alt={roomInfo!.description}
           width={1920}
@@ -90,10 +92,16 @@ export default function RoomsPage() {
           positionX={coordinateX!}
           positionY={coordinateY!}
         />
+        <div className="m-4">
+          <ObjectivesDialog />
+        </div>
+        <div className="m-4">
+          <ItemsDialog />
+        </div>
       </main>
       <aside>
         <Image
-          className="absolute w-80 translate-x-5 bottom-4 hover:scale-105 transition-all cursor-pointer"
+          className="fixed w-80 translate-x-5 bottom-4 hover:scale-105 transition-all cursor-pointer"
           src={roomInfo!.minimapImg}
           alt={roomInfo!.description}
           width={400}

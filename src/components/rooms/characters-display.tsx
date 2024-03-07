@@ -41,9 +41,9 @@ export default function CharactersDisplay({
           key={character.id}
           src={character.image}
           alt={character.name}
-          className="absolute top-24 cursor-pointer"
-          width={500}
-          height={250}
+          className="fixed top-32 left-40 cursor-pointer"
+          width={400}
+          height={300}
           onClick={() => {
             setShowChat(!showChat);
             setTeacher(character);
@@ -52,7 +52,7 @@ export default function CharactersDisplay({
         />
       ))}
       {showChat && (
-        <section className="w-1/2 right-0 flex flex-col backdrop-blur h-full absolute p-8 place-content-between border-l">
+        <section className="w-1/2 right-0 flex flex-col backdrop-blur h-screen fixed p-8 place-content-between border-l">
           <Card>
             <CardHeader className="flex flex-row items-center gap-4">
               <Avatar>

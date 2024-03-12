@@ -1,7 +1,21 @@
+"use client";
 import { Button } from "@/components/ui/button";
+import { Save } from "@/interfaces/entities/save";
+import { LoadSave } from "@/services/shared/storage-service";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [save, setSave] = useState<Save | null>(null);
+
+  useEffect(() => {
+    const result = LoadSave();
+
+    if (result) {
+      setSave(result);
+    }
+  }, []);
+
   return (
     <main className="flex h-screen flex-col items-center justify-center p-24">
       <div className="w-screen h-screen flex items-center flex-col justify-center">
@@ -21,14 +35,17 @@ export default function Home() {
           y disfrutar de este juego!
         </p>
         <div className="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
-          <Link href={"/rooms?x=0&y=0"}>
+          <Link href={"/new"}>
             <Button size={"lg"}>Nueva Partida</Button>
           </Link>
-          <Link href={"/rooms?x=1&y=1"}>
-            <Button size={"lg"} variant={"secondary"}>
-              Continuar
-            </Button>
-          </Link>
+          {save && (
+            <Link href={`/rooms?x=${save.positionX}&y=${save.positionY}`}>
+              <Button size={"lg"} variant={"secondary"}>
+                Continuar
+              </Button>
+            </Link>
+          )}
+
           <Link href={"tutorial"}>
             <Button size={"lg"} variant={"outline"}>
               Tutorial

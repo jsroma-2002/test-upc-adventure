@@ -25,6 +25,8 @@ export default function RoomsPage() {
 
   const [useKeyboard, setUseKeyboard] = useState<boolean>(true);
 
+  const [loaded, setLoaded] = useState<boolean>(false);
+
   const coordinateX = searchParams.get("x");
   const coordinateY = searchParams.get("y");
 
@@ -32,11 +34,11 @@ export default function RoomsPage() {
 
   useEffect(() => {
     const savedGame = LoadSave();
-
-    console.log(savedGame);
     if (savedGame) {
       setSave(savedGame);
     }
+
+    setLoaded(true);
   }, [setSave]);
 
   const handleMove = useCallback(
@@ -128,6 +130,7 @@ export default function RoomsPage() {
           height={1080}
         />
         <CharactersDisplay
+        tutorialAction={null}
           disableKeyboard={() => setUseKeyboard(!useKeyboard)}
           positionX={coordinateX!}
           positionY={coordinateY!}
@@ -140,9 +143,7 @@ export default function RoomsPage() {
             <Save className="mr-2 h-4 w-4" /> Guardar
           </Button>
         </div>
-        <div className="m-4">
-          <ObjectivesDialog />
-        </div>
+        <div className="m-4">{loaded && <ObjectivesDialog />}</div>
         <div className="m-4">
           <ItemsDialog />
         </div>

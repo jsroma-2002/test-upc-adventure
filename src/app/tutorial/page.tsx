@@ -57,9 +57,11 @@ export default function TutorialPage() {
           interactivo que te guiará paso a paso por el juego.
         </p>
         <span className="flex flex-row gap-4">
-          <Button size={"lg"} variant={"default"}>
-            Iniciar
-          </Button>
+          <Link href={"/tutorial/start"}>
+            <Button size={"lg"} variant={"default"}>
+              Iniciar
+            </Button>
+          </Link>
           <Link href={"/"}>
             <Button size={"lg"} variant={"secondary"}>
               Volver

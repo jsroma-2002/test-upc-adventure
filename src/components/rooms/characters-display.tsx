@@ -1,6 +1,7 @@
 import { Character } from "@/interfaces/entities/character";
 import { Message } from "@/interfaces/entities/message";
 import { getCharacterByCoordinates } from "@/services/rooms/characters-service";
+import { GetTeacherResponse } from "@/services/rooms/messages-service";
 import Image from "next/image";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -13,12 +14,14 @@ interface CharacterDisplay {
   positionX: string;
   positionY: string;
   disableKeyboard: () => void;
+  tutorialAction: (() => void) | null;
 }
 
 export default function CharactersDisplay({
   positionX,
   positionY,
   disableKeyboard,
+  tutorialAction,
 }: CharacterDisplay) {
   const characters = getCharacterByCoordinates(positionX, positionY);
 
@@ -33,6 +36,21 @@ export default function CharactersDisplay({
   const [showChat, setShowChat] = useState(false);
 
   const [teacher, setTeacher] = useState<Character | null>(null);
+
+  const [loading, setLoading] = useState(false);
+
+  function getResponse(input: string) {
+    setLoading(true);
+
+    GetTeacherResponse(teacher?.name || "", input).then((data) => {
+      setMessage([
+        ...messages,
+        new Message(messages.length.toString(), input, false),
+        new Message((messages.length + 1).toString(), data, true),
+      ]);
+      setLoading(false);
+    });
+  }
 
   return (
     <>
@@ -97,13 +115,11 @@ export default function CharactersDisplay({
               placeholder="Mensaje..."
             />
             <Button
+              disabled={loading}
               onClick={(e) => {
                 e.preventDefault();
                 if (userInput !== "") {
-                  setMessage([
-                    ...messages,
-                    new Message(messages.length.toString(), userInput, false),
-                  ]);
+                  getResponse(userInput);
                 }
                 setUserInput("");
               }}
@@ -117,6 +133,9 @@ export default function CharactersDisplay({
                 setShowChat(false);
                 disableKeyboard();
                 setMessage(initialMessages);
+                if (tutorialAction !== null) {
+                  tutorialAction();
+                }
               }}
               className="w-1/4"
               variant={"destructive"}

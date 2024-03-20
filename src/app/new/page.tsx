@@ -26,6 +26,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Difficulty } from "@/interfaces/entities/save";
+import { useSave } from "@/providers/save-provider";
 import { GetObjectives } from "@/services/new/objectives-service";
 import { SaveDataToLocalStorage } from "@/services/shared/storage-service";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,6 +60,8 @@ export default function NewPage() {
 
   const router = useRouter();
 
+  const { setSave } = useSave();
+
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     const currentSave = {
@@ -70,9 +73,13 @@ export default function NewPage() {
       objectives: GetObjectives(values.difficulty as Difficulty),
     };
 
+    console.log(values.difficulty);
+
     SaveDataToLocalStorage(currentSave);
 
-    router.push("/rooms?x=0&y=0");
+    setSave(currentSave);
+
+    router.push("/new/adventure");
   }
 
   return (

@@ -32,7 +32,7 @@ export default function ObjectivesDialog() {
         <ul className="space-y-4">
           {save.objectives.map((objective, index) => (
             <li key={index}>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-2 w-64 place-content-between">
                 <span className="text-md font-medium leading-none bg-primary rounded-full h-4 w-4 text-center">
                   {index + 1}
                 </span>
@@ -43,6 +43,13 @@ export default function ObjectivesDialog() {
                   <small className="text-sm text-gray-500 leading-none -mt-1">
                     {objective.description}
                   </small>
+                </div>
+                <div>
+                  {objective.completed ? (
+                    <span className="text-green-500">Completado</span>
+                  ) : (
+                    <span className="text-red-500">Pendiente</span>
+                  )}
                 </div>
               </div>
             </li>

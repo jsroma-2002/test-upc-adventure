@@ -15,6 +15,7 @@ interface CharacterDisplay {
   positionY: string;
   disableKeyboard: () => void;
   tutorialAction: (() => void) | null;
+  completeObjetive: (id: string) => void;
 }
 
 export default function CharactersDisplay({
@@ -22,6 +23,7 @@ export default function CharactersDisplay({
   positionY,
   disableKeyboard,
   tutorialAction,
+  completeObjetive,
 }: CharacterDisplay) {
   const characters = getCharacterByCoordinates(positionX, positionY);
 
@@ -46,9 +48,13 @@ export default function CharactersDisplay({
       setMessage([
         ...messages,
         new Message(messages.length.toString(), input, false),
-        new Message((messages.length + 1).toString(), data, true),
+        new Message((messages.length + 1).toString(), data.response, true),
       ]);
       setLoading(false);
+
+      if (data.tag === "ExistenciaBiblioteca") {
+        completeObjetive("3");
+      }
     });
   }
 
@@ -75,7 +81,7 @@ export default function CharactersDisplay({
             <CardHeader className="flex flex-row items-center gap-4">
               <Avatar>
                 <AvatarImage
-                  src="https://github.com/shadcn.png"
+                  src={teacher?.profileImage}
                   alt="Foto Perfil Profesor"
                 />
                 <AvatarFallback>CN</AvatarFallback>

@@ -10,10 +10,8 @@ export async function GetTeacherResponse(name: string, message: string) {
     }),
   });
 
-  console.log(message);
 
   const data = await response.json();
-  console.log(data);
 
-  return data.response;
+  return data;
 }

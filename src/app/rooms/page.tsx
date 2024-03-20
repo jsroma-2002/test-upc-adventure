@@ -1,6 +1,7 @@
 "use client";
 import CharacterDialog from "@/components/rooms/character-dialog";
 import CharactersDisplay from "@/components/rooms/characters-display";
+import DeskDialog from "@/components/rooms/desk-display";
 import ExitDialog from "@/components/rooms/exit-dialog";
 import ItemsDialog from "@/components/rooms/items-dialog";
 import ObjectivesDialog from "@/components/rooms/objective-dialog";
@@ -8,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Item } from "@/interfaces/entities/item";
 import { isOnLimit } from "@/lib/rooms/utils";
 import { useSave } from "@/providers/save-provider";
+import { GetDeskByPosition } from "@/services/rooms/desk-service";
 import { getItemsByCoordinates } from "@/services/rooms/items-service";
 import { getRoomByCoordinates } from "@/services/rooms/room-service";
 import {
@@ -119,6 +121,18 @@ export default function RoomsPage() {
     }
   }
 
+  function completeObjective(objectiveId: string) {
+    const currentSave = save;
+    const objective = currentSave.objectives.find((o) => o.id === objectiveId);
+
+    if (objective) {
+      objective.completed = true;
+      setSave(currentSave);
+    }
+  }
+
+  const desks = GetDeskByPosition(coordinateX!, coordinateY!);
+
   return (
     <div>
       <main>
@@ -130,11 +144,18 @@ export default function RoomsPage() {
           height={1080}
         />
         <CharactersDisplay
-        tutorialAction={null}
+          tutorialAction={null}
           disableKeyboard={() => setUseKeyboard(!useKeyboard)}
           positionX={coordinateX!}
           positionY={coordinateY!}
+          completeObjetive={completeObjective}
         />
+        {desks && (
+          <DeskDialog
+            disableKeyboard={() => setUseKeyboard(!useKeyboard)}
+            completeObjective={completeObjective}
+          />
+        )}
         <div className="m-4">
           <ExitDialog />
         </div>
@@ -156,7 +177,12 @@ export default function RoomsPage() {
             <Image
               key={item.id}
               className="fixed left-52 top-24 hover:scale-105 transition-all cursor-pointer animate-bounce"
-              onClick={() => addItemToSave(item)}
+              onClick={() => {
+                addItemToSave(item);
+                if (item.id === "2") {
+                  completeObjective("1");
+                }
+              }}
               src={item.image}
               alt={"Item"}
               width={100}
@@ -165,7 +191,12 @@ export default function RoomsPage() {
           ) : (
             <Image
               key={item.id}
-              onClick={() => addItemToSave(item)}
+              onClick={() => {
+                addItemToSave(item);
+                if (item.id === "2") {
+                  completeObjective("1");
+                }
+              }}
               className="fixed right-64 hover:scale-105 transition-all cursor-pointer animate-bounce"
               src={item.image}
               alt={"Item"}

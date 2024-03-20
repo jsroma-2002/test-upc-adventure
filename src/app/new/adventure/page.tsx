@@ -1,14 +1,18 @@
 "use client";
-import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardFooter } from "@/components/ui/card";
 import { Adventure } from "@/interfaces/entities/adventure";
 import { useSave } from "@/providers/save-provider";
 import { GetAventure } from "@/services/new/adventure-service";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AdventurePage() {
   const [adventure, setAdventure] = useState<Adventure | null>(null);
 
   const { save } = useSave();
+
+  const router = useRouter();
 
   useEffect(() => {
     setAdventure(GetAventure(save.difficulty));
@@ -35,6 +39,11 @@ export default function AdventurePage() {
               <li key={objective.id}>{objective.name}</li>
             ))}
           </ul>
+          <CardFooter>
+            <Button onClick={() => router.push("/rooms?x=0&y=0")}>
+              Comenzar
+            </Button>
+          </CardFooter>
         </Card>
       ) : (
         <h1>Loading...</h1>

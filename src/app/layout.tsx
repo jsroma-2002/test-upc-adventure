@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Dosis } from "next/font/google";
 import "./globals.css";
@@ -16,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body className={dosis.className}>{children}</body>
+      <body className={dosis.className}>
+        {children}
+        <Toaster position="top-center" />
+      </body>
     </html>
   );
 }

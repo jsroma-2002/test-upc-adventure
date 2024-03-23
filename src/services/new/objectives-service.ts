@@ -2,7 +2,6 @@ import { Objective } from "@/interfaces/entities/objective";
 import { Difficulty } from "@/interfaces/entities/save";
 
 export function GetObjectives(level: Difficulty): Objective[] {
-
   console.log(level);
 
   switch (level) {
@@ -14,7 +13,9 @@ export function GetObjectives(level: Difficulty): Objective[] {
           "Consigue un libro en la biblioteca",
           null,
           null,
-          false
+          false,
+          new Date(),
+          null
         ),
         new Objective(
           "3",
@@ -22,7 +23,9 @@ export function GetObjectives(level: Difficulty): Objective[] {
           "Consulta a un personaje sobre la biblioteca",
           null,
           null,
-          false
+          false,
+          new Date(),
+          null
         ),
         new Objective(
           "9",
@@ -30,7 +33,9 @@ export function GetObjectives(level: Difficulty): Objective[] {
           "Ingresa al aula virtual mediante las plataformas",
           null,
           null,
-          false
+          false,
+          new Date(),
+          null
         ),
       ];
     case Difficulty.MEDIUM:
@@ -41,7 +46,9 @@ export function GetObjectives(level: Difficulty): Objective[] {
           "Encuentra la llave",
           null,
           null,
-          false
+          false,
+          new Date(),
+          null
         ),
         new Objective(
           "2",
@@ -49,7 +56,9 @@ export function GetObjectives(level: Difficulty): Objective[] {
           "Encuentra la puerta",
           null,
           null,
-          false
+          false,
+          new Date(),
+          null
         ),
         new Objective(
           "3",
@@ -57,7 +66,9 @@ export function GetObjectives(level: Difficulty): Objective[] {
           "Encuentra el cofre",
           null,
           null,
-          false
+          false,
+          new Date(),
+          null
         ),
       ];
     case Difficulty.HARD:
@@ -68,7 +79,9 @@ export function GetObjectives(level: Difficulty): Objective[] {
           "Encuentra la llave",
           null,
           null,
-          false
+          false,
+          new Date(),
+          null
         ),
         new Objective(
           "2",
@@ -76,7 +89,9 @@ export function GetObjectives(level: Difficulty): Objective[] {
           "Encuentra la puerta",
           null,
           null,
-          false
+          false,
+          new Date(),
+          null
         ),
         new Objective(
           "3",
@@ -84,7 +99,9 @@ export function GetObjectives(level: Difficulty): Objective[] {
           "Encuentra el cofre",
           null,
           null,
-          false
+          false,
+          new Date(),
+          null
         ),
       ];
   }

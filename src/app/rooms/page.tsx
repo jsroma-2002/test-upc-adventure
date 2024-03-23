@@ -20,6 +20,7 @@ import { Save } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function RoomsPage() {
   const searchParams = useSearchParams();
@@ -116,6 +117,7 @@ export default function RoomsPage() {
     const currentSave = save;
     //if item not in save, add it
     if (!currentSave.items.find((i) => i.id === item.id)) {
+      toast.info("Item añadido al inventario");
       currentSave.items.push(item);
       setSave(currentSave);
     }
@@ -126,8 +128,13 @@ export default function RoomsPage() {
     const objective = currentSave.objectives.find((o) => o.id === objectiveId);
 
     if (objective) {
+      //if is already completed, return
+      if (objective.completed) return;
+
       objective.completed = true;
+      objective.endTime = new Date();
       setSave(currentSave);
+      toast.success("Objetivo completado");
     }
   }
 
@@ -160,7 +167,12 @@ export default function RoomsPage() {
           <ExitDialog />
         </div>
         <div className="m-4">
-          <Button onClick={() => SaveDataToLocalStorage(save)}>
+          <Button
+            onClick={() => {
+              toast.success("Partida guardada");
+              SaveDataToLocalStorage(save);
+            }}
+          >
             <Save className="mr-2 h-4 w-4" /> Guardar
           </Button>
         </div>
@@ -179,6 +191,7 @@ export default function RoomsPage() {
               className="fixed left-52 top-24 hover:scale-105 transition-all cursor-pointer animate-bounce"
               onClick={() => {
                 addItemToSave(item);
+
                 if (item.id === "2") {
                   completeObjective("1");
                 }
@@ -193,6 +206,7 @@ export default function RoomsPage() {
               key={item.id}
               onClick={() => {
                 addItemToSave(item);
+
                 if (item.id === "2") {
                   completeObjective("1");
                 }

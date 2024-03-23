@@ -10,6 +10,8 @@ export class Objective {
   public itemId: string | null;
   public location: location | null;
   public completed: boolean;
+  public createdAt: Date;
+  public endTime: Date | null;
 
   constructor(
     id: string,
@@ -17,7 +19,9 @@ export class Objective {
     description: string,
     itemId: string | null,
     location: location | null,
-    completed: boolean
+    completed: boolean,
+    createdAt: Date,
+    endTime: Date | null
   ) {
     this.id = id;
     this.name = name;
@@ -25,5 +29,7 @@ export class Objective {
     this.itemId = itemId;
     this.location = location;
     this.completed = completed;
+    this.createdAt = createdAt;
+    this.endTime = endTime;
   }
 }

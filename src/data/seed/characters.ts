@@ -32,4 +32,14 @@ export const charactersData: Character[] = [
     positionY: 2,
     role: CHARACTER_ROLES.TEACHER,
   },
+  {
+    id: "4",
+    name: "Luis Perez",
+    description: "Estudiante de Derecho",
+    profileImage: "/characters/profileStudent1.png",
+    image: "/characters/student1.png",
+    positionX: -1,
+    positionY: 1,
+    role: CHARACTER_ROLES.STUDENT,
+  },
 ];

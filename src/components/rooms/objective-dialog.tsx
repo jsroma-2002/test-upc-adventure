@@ -11,9 +11,17 @@ import {
 } from "@/components/ui/dialog";
 import { useSave } from "@/providers/save-provider";
 import { LayoutList } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function ObjectivesDialog() {
   const { save } = useSave();
+
+  const router = useRouter();
+
+  //get if all objectives are completed
+  const allObjectivesCompleted = save.objectives.every(
+    (objective) => objective.completed
+  );
 
   return (
     <Dialog>
@@ -57,8 +65,15 @@ export default function ObjectivesDialog() {
         </ul>
 
         <DialogFooter>
+          {allObjectivesCompleted && (
+            <Button onClick={() => router.push("/feedback")} type="button">
+              Finalizar Aventura
+            </Button>
+          )}
           <DialogClose asChild>
-            <Button type="button">Cerrar</Button>
+            <Button variant={"outline"} type="button">
+              Cerrar
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

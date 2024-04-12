@@ -15,8 +15,12 @@ export default function AdventurePage() {
   const router = useRouter();
 
   useEffect(() => {
-    setAdventure(GetAventure(save.difficulty));
-  }, [save]);
+    if (!adventure) {
+      GetAventure(save.difficulty, save.topics).then((adventure) => {
+        setAdventure(adventure);
+      });
+    }
+  }, [save, adventure]);
 
   return (
     <div className="h-screen w-screen flex items-center justify-center">

@@ -41,6 +41,8 @@ export default function CharactersDisplay({
 
   const [loading, setLoading] = useState(false);
 
+  const [history, setHistory] = useState<string[]>([]);
+
   function getResponse(input: string) {
     setLoading(true);
 
@@ -51,9 +53,43 @@ export default function CharactersDisplay({
         new Message((messages.length + 1).toString(), data.response, true),
       ]);
       setLoading(false);
+      setHistory([...history, data.tag]);
+
+      const libraryTags = [
+        "EncontrarBiblioteca",
+        "ExistenciaBiblioteca",
+        "EncontrarLibro",
+        "ExistenciaLibros",
+        "PrestarLibros",
+        "ComoPrestarLibros",
+        "LibrosDigitalesExistencia",
+      ];
+
+      const bookTags = [
+        "EncontrarLibro",
+        "ExistenciaLibros",
+        "PrestarLibros",
+        "ComoPrestarLibros",
+        "CuantosLibrosPrestados",
+        "CantidadLibros",
+        "LibrosDigitalesExistencia",
+        "EncontrarLibrosDigitales",
+      ];
 
       if (data.tag === "ExistenciaBiblioteca") {
         completeObjetive("3");
+      }
+
+      if (data.tag === "FechasImportantes") {
+        completeObjetive("16");
+      }
+
+      if (history.filter((tag) => libraryTags.includes(tag)).length >= 3) {
+        completeObjetive("4");
+      }
+
+      if (history.filter((tag) => bookTags.includes(tag)).length > 0) {
+        completeObjetive("6");
       }
     });
   }

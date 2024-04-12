@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -25,6 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { seedItems } from "@/data/seed/items";
 import { Difficulty } from "@/interfaces/entities/save";
 import { useSave } from "@/providers/save-provider";
 import { GetObjectives } from "@/services/new/objectives-service";
@@ -33,6 +35,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+
+const items = [
+  {
+    id: "1",
+    label: "Plataforma Web",
+  },
+  {
+    id: "2",
+    label: "Uso de servicios de la institución",
+  },
+  {
+    id: "3",
+    label: "Procesos de la institución",
+  },
+  {
+    id: "4",
+    label: "Areas de la institución",
+  },
+] as const;
 
 const formSchema = z.object({
   username: z
@@ -46,6 +67,9 @@ const formSchema = z.object({
   difficulty: z.enum([Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD], {
     required_error: "Debes seleccionar una dificultad",
   }),
+  items: z.array(z.string()).refine((value) => value.some((item) => item), {
+    message: "Debes seleccionar al menos una temática.",
+  }),
 });
 
 export default function NewPage() {
@@ -55,6 +79,7 @@ export default function NewPage() {
     defaultValues: {
       username: "",
       difficulty: undefined,
+      items: [],
     },
   });
 
@@ -69,11 +94,12 @@ export default function NewPage() {
       positionY: "0",
       difficulty: values.difficulty as Difficulty,
       username: values.username,
-      items: [],
+      items: [seedItems.find((item) => item.id === "3")!],
       objectives: GetObjectives(values.difficulty as Difficulty),
+      topics: values.items,
+      userCode: `u2024${Math.random().toString().slice(-5)}`,
+      password: Math.random().toString(36).slice(-8),
     };
-
-    console.log(values.difficulty);
 
     SaveDataToLocalStorage(currentSave);
 
@@ -137,6 +163,61 @@ export default function NewPage() {
                   </FormItem>
                 )}
               />
+              <FormField
+                control={form.control}
+                name="items"
+                render={() => (
+                  <FormItem>
+                    <div className="mb-4">
+                      <FormLabel className="text-base">
+                        Temas a reforzar
+                      </FormLabel>
+                      <FormDescription>
+                        Selecciona las temáticas que quieras reforzar mediante
+                        la aventura.
+                      </FormDescription>
+                    </div>
+                    {items.map((item) => (
+                      <FormField
+                        key={item.id}
+                        control={form.control}
+                        name="items"
+                        render={({ field }) => {
+                          return (
+                            <FormItem
+                              key={item.id}
+                              className="flex flex-row items-start space-x-3 space-y-0"
+                            >
+                              <FormControl>
+                                <Checkbox
+                                  checked={field.value?.includes(item.id)}
+                                  onCheckedChange={(checked) => {
+                                    return checked
+                                      ? field.onChange([
+                                          ...field.value,
+                                          item.id,
+                                        ])
+                                      : field.onChange(
+                                          field.value?.filter(
+                                            (value) => value !== item.id
+                                          )
+                                        );
+                                  }}
+                                />
+                              </FormControl>
+                              <FormLabel className="font-normal">
+                                {item.label}
+                              </FormLabel>
+                            </FormItem>
+                          );
+                        }}
+                      />
+                    ))}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <Button type="submit">Confirmar</Button>
             </form>
           </Form>

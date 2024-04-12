@@ -1,6 +1,6 @@
 import { Item } from "@/interfaces/entities/item";
 
-export const items: Item[] = [
+export const seedItems: Item[] = [
   {
     id: "1",
     name: "Apple",

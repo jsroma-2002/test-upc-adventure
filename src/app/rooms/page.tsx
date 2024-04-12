@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import CharacterDialog from "@/components/rooms/character-dialog";
 import CharactersDisplay from "@/components/rooms/characters-display";
 import DeskDialog from "@/components/rooms/desk-display";
 import ExitDialog from "@/components/rooms/exit-dialog";
 import ItemsDialog from "@/components/rooms/items-dialog";
+import MiniMapDialog from "@/components/rooms/minimap-dialog";
 import ObjectivesDialog from "@/components/rooms/objective-dialog";
 import { Button } from "@/components/ui/button";
 import { Item } from "@/interfaces/entities/item";
@@ -30,6 +32,8 @@ export default function RoomsPage() {
 
   const [loaded, setLoaded] = useState<boolean>(false);
 
+  const [entranceLocked, setEntranceLocked] = useState<boolean>(true);
+
   const coordinateX = searchParams.get("x");
   const coordinateY = searchParams.get("y");
 
@@ -43,6 +47,24 @@ export default function RoomsPage() {
 
     setLoaded(true);
   }, [setSave]);
+
+  function useItem(item: Item) {
+    switch (item.id) {
+      case "3":
+        setEntranceLocked(false);
+        if (coordinateX === "0" && coordinateY === "0") {
+          toast.success("¡Puerta desbloqueada!");
+          break;
+        } else {
+          toast.info("Este ítem no puede ser utilizado");
+          break;
+        }
+
+      default:
+        toast.info("Este ítem no puede ser utilizado");
+        break;
+    }
+  }
 
   const handleMove = useCallback(
     (direction: "up" | "down" | "left" | "right") => {
@@ -59,6 +81,11 @@ export default function RoomsPage() {
         x = (parseInt(x!) + 1).toString();
       }
 
+      if (x! === "0" && y! === "1" && entranceLocked) {
+        toast.error("No puedes ingresar a la UPC sin identificarte.");
+        return;
+      }
+
       const currentSave = save;
 
       currentSave.positionX = x!;
@@ -68,7 +95,7 @@ export default function RoomsPage() {
 
       router.push(`/rooms?x=${x}&y=${y}`);
     },
-    [coordinateX, coordinateY, router, setSave, save]
+    [coordinateX, coordinateY, router, setSave, save, entranceLocked]
   );
 
   //move with arrow keys
@@ -134,11 +161,23 @@ export default function RoomsPage() {
       objective.completed = true;
       objective.endTime = new Date();
       setSave(currentSave);
-      toast.success("Objetivo completado");
+      SaveDataToLocalStorage(save);
+      toast.success("Felicidades, haz completado un objetivo");
+
+      if (save.objectives.every((objective) => objective.completed)) {
+        setAdventureComplete(true);
+        toast.success("¡Has completado la aventura!", {
+          description:
+            "Felicidades por completar la aventura. Esperamos que hayas disfrutado de la experiencia.",
+          duration: 5000,
+        });
+      }
     }
   }
 
   const desks = GetDeskByPosition(coordinateX!, coordinateY!);
+
+  const [adventureComplete, setAdventureComplete] = useState<boolean>(false);
 
   return (
     <div>
@@ -178,7 +217,7 @@ export default function RoomsPage() {
         </div>
         <div className="m-4">{loaded && <ObjectivesDialog />}</div>
         <div className="m-4">
-          <ItemsDialog />
+          <ItemsDialog action={useItem} />
         </div>
         <div className="m-4">
           <CharacterDialog />
@@ -195,6 +234,10 @@ export default function RoomsPage() {
                 if (item.id === "2") {
                   completeObjective("1");
                 }
+
+                if (item.id === "5") {
+                  completeObjective("7");
+                }
               }}
               src={item.image}
               alt={"Item"}
@@ -210,6 +253,10 @@ export default function RoomsPage() {
                 if (item.id === "2") {
                   completeObjective("1");
                 }
+
+                if (item.id === "5") {
+                  completeObjective("7");
+                }
               }}
               className="fixed right-64 hover:scale-105 transition-all cursor-pointer animate-bounce"
               src={item.image}
@@ -221,12 +268,9 @@ export default function RoomsPage() {
         )}
       </main>
       <aside>
-        <Image
-          className="fixed w-80 translate-x-5 bottom-4 hover:scale-105 transition-all cursor-pointer"
-          src={roomInfo!.minimapImg}
-          alt={roomInfo!.description}
-          width={400}
-          height={400}
+        <MiniMapDialog
+          minimapImg={roomInfo!.minimapImg}
+          description={roomInfo!.description}
         />
       </aside>
     </div>

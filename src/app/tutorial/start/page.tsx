@@ -136,6 +136,15 @@ export default function StartPage() {
           stepIndex={stepIndex}
           continuous
           run={run}
+          locale={
+            {
+              back: "Atrás",
+              close: "Cerrar",
+              last: "Salir del Tutorial",
+              next: "Siguiente",
+              skip: "Saltar",
+            } as any
+          }
         />
       )}
       <main>
@@ -147,6 +156,7 @@ export default function StartPage() {
           height={1080}
         />
         <CharactersDisplay
+          completeObjetive={(objectiveId) => null}
           tutorialAction={() => {
             setRun(true);
             setStepIndex(8);

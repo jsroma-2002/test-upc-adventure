@@ -7,6 +7,6 @@ type State = {
 };
 
 export const useSave = create<State>((set) => ({
-  save: new Save("0", "0", Difficulty.EASY, "", [], []),
+  save: new Save("0", "0", Difficulty.EASY, "", [], [], [], "", ""),
   setSave: (save: Save) => set({ save }),
 }));

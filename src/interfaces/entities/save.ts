@@ -14,6 +14,9 @@ export class Save {
   public username: string;
   public items: Item[];
   public objectives: Objective[];
+  public topics: string[];
+  public userCode: string;
+  public password: string;
 
   constructor(
     positionX: string,
@@ -21,7 +24,10 @@ export class Save {
     difficulty: Difficulty,
     username: string,
     items: Item[],
-    objectives: Objective[]
+    objectives: Objective[],
+    topics: string[],
+    userCode: string,
+    password: string
   ) {
     this.positionX = positionX;
     this.positionY = positionY;
@@ -29,5 +35,8 @@ export class Save {
     this.username = username;
     this.items = items;
     this.objectives = objectives;
+    this.topics = topics;
+    this.userCode = userCode;
+    this.password = password;
   }
 }

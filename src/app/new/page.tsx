@@ -94,7 +94,10 @@ export default function NewPage() {
       positionY: "0",
       difficulty: values.difficulty as Difficulty,
       username: values.username,
-      items: [seedItems.find((item) => item.id === "3")!],
+      items: [
+        seedItems.find((item) => item.id === "3")!,
+        seedItems.find((item) => item.id === "6")!,
+      ],
       objectives: GetObjectives(values.difficulty as Difficulty),
       topics: values.items,
       userCode: `u2024${Math.random().toString().slice(-5)}`,

@@ -8,6 +8,15 @@ import ItemsDialog from "@/components/rooms/items-dialog";
 import MiniMapDialog from "@/components/rooms/minimap-dialog";
 import ObjectivesDialog from "@/components/rooms/objective-dialog";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { seedItems } from "@/data/seed/items";
 import { Item } from "@/interfaces/entities/item";
 import { isOnLimit } from "@/lib/rooms/utils";
 import { useSave } from "@/providers/save-provider";
@@ -53,10 +62,19 @@ export default function RoomsPage() {
       case "3":
         setEntranceLocked(false);
         if (coordinateX === "0" && coordinateY === "0") {
-          toast.success("¡Puerta desbloqueada!");
+          toast.success("Escenario desbloqueado!");
           break;
         } else {
           toast.info("Este ítem no puede ser utilizado");
+          break;
+        }
+      case "6":
+        if (save.items.find((i) => i.id === "7")) {
+          toast.info("Ya tienes un TIU Virtual");
+          break;
+        } else {
+          addItemToSave(seedItems.find((i) => i.id === "7")!);
+          toast.success("Conseguiste un TIU Virtual");
           break;
         }
 
@@ -81,7 +99,13 @@ export default function RoomsPage() {
         x = (parseInt(x!) + 1).toString();
       }
 
-      if (x! === "0" && y! === "1" && entranceLocked) {
+      if (
+        x! === "0" &&
+        y! === "1" &&
+        entranceLocked &&
+        coordinateX === "0" &&
+        coordinateY === "0"
+      ) {
         toast.error("No puedes ingresar a la UPC sin identificarte.");
         return;
       }
@@ -225,45 +249,90 @@ export default function RoomsPage() {
 
         {items.map((item, index) =>
           index == 0 ? (
-            <Image
-              key={item.id}
-              className="fixed left-52 top-24 hover:scale-105 transition-all cursor-pointer animate-bounce"
-              onClick={() => {
-                addItemToSave(item);
+            <DropdownMenu key={index}>
+              <DropdownMenuTrigger>
+                <Image
+                  className="fixed left-52 top-24 hover:scale-105 transition-all cursor-pointer animate-bounce"
+                  src={item.image}
+                  alt={"Item"}
+                  width={100}
+                  height={100}
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="absolute bottom-10 left-52 z-50 ">
+                <DropdownMenuLabel>{item.name}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    if (item.id === "5") {
+                      toast.error(
+                        "Para recoger este item, debes identificarte con tu TIU"
+                      );
+                    }
 
-                if (item.id === "2") {
-                  completeObjective("1");
-                }
+                    if (item.id === "2") {
+                      addItemToSave(item);
+                      completeObjective("1");
+                    }
 
-                if (item.id === "5") {
-                  completeObjective("7");
-                }
-              }}
-              src={item.image}
-              alt={"Item"}
-              width={100}
-              height={100}
-            />
+                    // if (item.id === "5") {
+                    //   addItemToSave(item);
+                    //   completeObjective("7");
+                    // }
+                  }}
+                >
+                  Recoger
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
-            <Image
-              key={item.id}
-              onClick={() => {
-                addItemToSave(item);
+            <DropdownMenu key={index}>
+              <DropdownMenuTrigger>
+                <Image
+                  className="fixed right-64 hover:scale-105 transition-all cursor-pointer animate-bounce"
+                  src={item.image}
+                  alt={"Item"}
+                  width={100}
+                  height={100}
+                />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="absolute left-[85rem]  z-50 ">
+                <DropdownMenuLabel>{item.name}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  onClick={() => {
+                    if (
+                      item.id === "5" &&
+                      !save.items.find((i) => i.id === "7")
+                    ) {
+                      toast.error(
+                        "Para recoger este item, debes identificarte con tu TIU"
+                      );
+                    }
 
-                if (item.id === "2") {
-                  completeObjective("1");
-                }
+                    if (
+                      item.id === "5" &&
+                      save.items.find((i) => i.id === "7")
+                    ) {
+                      addItemToSave(item);
+                      completeObjective("7");
+                    }
 
-                if (item.id === "5") {
-                  completeObjective("7");
-                }
-              }}
-              className="fixed right-64 hover:scale-105 transition-all cursor-pointer animate-bounce"
-              src={item.image}
-              alt={"Item"}
-              width={100}
-              height={100}
-            />
+                    if (item.id === "2") {
+                      addItemToSave(item);
+                      completeObjective("1");
+                    }
+
+                    // if (item.id === "5") {
+                    //   addItemToSave(item);
+                    //   completeObjective("7");
+                    // }
+                  }}
+                >
+                  Recoger
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )
         )}
       </main>

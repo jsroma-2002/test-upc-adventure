@@ -59,6 +59,7 @@ export default function DeskDialog({
   }, [searchResults]);
 
   const [openMail, setOpenMail] = useState<boolean>(false);
+  const [openLoan, setOpenLoan] = useState<boolean>(false);
 
   const [authenticated, setAuthenticated] = useState<boolean>(false);
 
@@ -124,6 +125,14 @@ export default function DeskDialog({
           >
             Ver correo
           </Button>
+          <Button
+            onClick={() => {
+              setOpenLoan(true);
+            }}
+            type="button"
+          >
+            Préstamo
+          </Button>
         </form>
 
         <div className="flex gap-2 items-center justify-center">
@@ -154,6 +163,59 @@ export default function DeskDialog({
               </CardContent>
             </Card>
           )}
+          {openLoan &&
+            (!authenticated ? (
+              <AuthDialog
+                username={save.userCode}
+                password={save.password}
+                onLogin={() => {
+                  setAuthenticated(true);
+                }}
+              />
+            ) : (
+              <Card>
+                <CardHeader>
+                  <CardTitle>
+                    Bienvenido a la plataforma de prestamos.
+                  </CardTitle>
+                  <CardDescription>
+                    Confirme la información de su cuenta y coloca el libro de
+                    manera vertical dentro de la v hasta que se registre el
+                    préstamo.(Nota: Dentro de esta simulación puede recoger el
+                    libro o tablet directamente en un escenario real seguir las
+                    indicaciones.){" "}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-col gap-8">
+                  <div className="flex flex-col gap-2">
+                    <p>Código de usuario: {save.userCode}</p>
+                    <p>Nombre: {save.username}</p>
+                    <Button
+                      onClick={() => {
+                        setOpenLoan(false);
+                        completeObjective("2");
+                        toast.success("Has reservado un libro");
+                        setSave({
+                          ...save,
+                          items: [
+                            ...save.items,
+                            {
+                              id: "2",
+                              name: "Book",
+                              image: "/items/book.svg",
+                              positionX: 0,
+                              positionY: 4,
+                            },
+                          ],
+                        });
+                      }}
+                    >
+                      Reservar Libro y Aceptar
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           {search === results[0] &&
             (!authenticated ? (
               <AuthDialog

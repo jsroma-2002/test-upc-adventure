@@ -20,6 +20,7 @@ import { Item } from "@/interfaces/entities/item";
 import { useSave } from "@/providers/save-provider";
 import { Box } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 interface ItemsDialogProps {
   action: (item: Item) => void;
@@ -60,11 +61,24 @@ export default function ItemsDialog({ action }: ItemsDialogProps) {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={() => {
-                      action(item);
+                      if (item.id === "6") {
+                        toast("No puedes usar este item");
+                      } else {
+                        action(item);
+                      }
                     }}
                   >
                     Usar
                   </DropdownMenuItem>
+                  {item.id === "6" && (
+                    <DropdownMenuItem
+                      onClick={() => {
+                        action(item);
+                      }}
+                    >
+                      Descargar Symmetry App
+                    </DropdownMenuItem>
+                  )}
                 </DropdownMenuContent>
               </DropdownMenu>
             ))

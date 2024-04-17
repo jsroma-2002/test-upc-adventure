@@ -34,7 +34,7 @@ export default function FeedbackPage() {
   const saveData = save.objectives.map((objective) => ({
     name: objective.name,
     //differences between the create time and the objective's end time in minutes
-    time: objective.endTime
+    segundos: objective.endTime
       ? Math.floor(
           (new Date(objective.endTime).getTime() -
             new Date(objective.createdAt).getTime()) /
@@ -87,7 +87,7 @@ export default function FeedbackPage() {
             contentStyle={{ backgroundColor: "#fff", border: "none" }}
           />
           <Legend />
-          <Bar dataKey="time" />
+          <Bar dataKey="segundos" />
         </BarChart>
       </ResponsiveContainer>
     </div>

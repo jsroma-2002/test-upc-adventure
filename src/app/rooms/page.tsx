@@ -110,6 +110,10 @@ export default function RoomsPage() {
         return;
       }
 
+      if (coordinateX === "0" && coordinateY === "0") {
+        completeObjective("17");
+      }
+
       const currentSave = save;
 
       currentSave.positionX = x!;

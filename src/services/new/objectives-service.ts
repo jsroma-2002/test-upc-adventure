@@ -6,7 +6,7 @@ export function GetObjectives(level: Difficulty): Objective[] {
   switch (level) {
     case Difficulty.EASY:
       return objectives.filter((objective) =>
-        ["13", "15", "14"].includes(objective.id)
+        ["1", "13", "17"].includes(objective.id)
       );
     case Difficulty.MEDIUM:
       return objectives.filter((objective) =>

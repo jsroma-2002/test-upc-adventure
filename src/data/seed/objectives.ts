@@ -139,7 +139,7 @@ export const objectives: Objective[] = [
     id: "15",
     name: "Revisa tus Cursos",
     description:
-      "Revisa tus cursos de clases desde alguna de las plataformas de la upc",
+      "Revisa tus cursos desde alguna de las plataformas de la upc",
     completed: false,
     createdAt: new Date(),
     endTime: null,
@@ -151,6 +151,17 @@ export const objectives: Objective[] = [
     name: "Consulta sobre las fechas más importantes del semestre",
     description:
       "En la UPC hay fechas importantes, consulta a un personaje sobre ellas",
+    completed: false,
+    createdAt: new Date(),
+    endTime: null,
+    itemId: null,
+    location: null,
+  },
+  {
+    id: "17",
+    name: "Ingresa a la UPC",
+    description:
+      "En el caso de tu primer día, debes ingresar a la UPC identificándote mediante algún documento valido. Revisa tu inventario para verificar si tienes alguno",
     completed: false,
     createdAt: new Date(),
     endTime: null,

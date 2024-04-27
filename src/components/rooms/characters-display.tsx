@@ -1,7 +1,12 @@
 import { Character } from "@/interfaces/entities/character";
 import { Message } from "@/interfaces/entities/message";
+import { CHARACTER_ROLES } from "@/lib/shared/enums";
 import { getCharacterByCoordinates } from "@/services/rooms/characters-service";
-import { GetTeacherResponse } from "@/services/rooms/messages-service";
+import {
+  GetAdminResponse,
+  GetStudentResponse,
+  GetTeacherResponse,
+} from "@/services/rooms/messages-service";
 import Image from "next/image";
 import { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -47,6 +52,108 @@ export default function CharactersDisplay({
     setLoading(true);
 
     GetTeacherResponse(teacher?.name || "", input).then((data) => {
+      setMessage([
+        ...messages,
+        new Message(messages.length.toString(), input, false),
+        new Message((messages.length + 1).toString(), data.response, true),
+      ]);
+      setLoading(false);
+      setHistory([...history, data.tag]);
+
+      const libraryTags = [
+        "EncontrarBiblioteca",
+        "ExistenciaBiblioteca",
+        "EncontrarLibro",
+        "ExistenciaLibros",
+        "PrestarLibros",
+        "ComoPrestarLibros",
+        "LibrosDigitalesExistencia",
+      ];
+
+      const bookTags = [
+        "EncontrarLibro",
+        "ExistenciaLibros",
+        "PrestarLibros",
+        "ComoPrestarLibros",
+        "CuantosLibrosPrestados",
+        "CantidadLibros",
+        "LibrosDigitalesExistencia",
+        "EncontrarLibrosDigitales",
+      ];
+
+      if (data.tag === "ExistenciaBiblioteca") {
+        completeObjetive("3");
+      }
+
+      if (data.tag === "FechasImportantes") {
+        completeObjetive("16");
+      }
+
+      if (history.filter((tag) => libraryTags.includes(tag)).length >= 3) {
+        completeObjetive("4");
+      }
+
+      if (history.filter((tag) => bookTags.includes(tag)).length > 0) {
+        completeObjetive("6");
+      }
+    });
+  }
+
+  function getResponseAdmin(input: string) {
+    setLoading(true);
+
+    GetAdminResponse(teacher?.name || "", input).then((data) => {
+      setMessage([
+        ...messages,
+        new Message(messages.length.toString(), input, false),
+        new Message((messages.length + 1).toString(), data.response, true),
+      ]);
+      setLoading(false);
+      setHistory([...history, data.tag]);
+
+      const libraryTags = [
+        "EncontrarBiblioteca",
+        "ExistenciaBiblioteca",
+        "EncontrarLibro",
+        "ExistenciaLibros",
+        "PrestarLibros",
+        "ComoPrestarLibros",
+        "LibrosDigitalesExistencia",
+      ];
+
+      const bookTags = [
+        "EncontrarLibro",
+        "ExistenciaLibros",
+        "PrestarLibros",
+        "ComoPrestarLibros",
+        "CuantosLibrosPrestados",
+        "CantidadLibros",
+        "LibrosDigitalesExistencia",
+        "EncontrarLibrosDigitales",
+      ];
+
+      if (data.tag === "ExistenciaBiblioteca") {
+        completeObjetive("3");
+      }
+
+      if (data.tag === "FechasImportantes") {
+        completeObjetive("16");
+      }
+
+      if (history.filter((tag) => libraryTags.includes(tag)).length >= 3) {
+        completeObjetive("4");
+      }
+
+      if (history.filter((tag) => bookTags.includes(tag)).length > 0) {
+        completeObjetive("6");
+      }
+    });
+  }
+
+  function getResponseStudent(input: string) {
+    setLoading(true);
+
+    GetStudentResponse(teacher?.name || "", input).then((data) => {
       setMessage([
         ...messages,
         new Message(messages.length.toString(), input, false),
@@ -161,7 +268,17 @@ export default function CharactersDisplay({
               onClick={(e) => {
                 e.preventDefault();
                 if (userInput !== "") {
-                  getResponse(userInput);
+                  if (teacher?.role === CHARACTER_ROLES.TEACHER) {
+                    getResponse(userInput);
+                  }
+
+                  if (teacher?.role === CHARACTER_ROLES.ADMIN) {
+                    getResponseAdmin(userInput);
+                  }
+
+                  if (teacher?.role === CHARACTER_ROLES.STUDENT) {
+                    getResponseStudent(userInput);
+                  }
                 }
                 setUserInput("");
               }}

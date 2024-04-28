@@ -37,20 +37,22 @@ export default function ObjectivesDialog() {
             Debes completar estos objetivos.
           </DialogDescription>
         </DialogHeader>
-        <ul className="space-y-4">
+        <ul className="space-y-4 min-w-[60vw]">
           {save.objectives.map((objective, index) => (
             <li key={index}>
-              <div className="flex items-center space-x-2 w-64 place-content-between">
-                <span className="text-md font-medium leading-none bg-primary rounded-full h-4 w-4 text-center">
-                  {index + 1}
-                </span>
-                <div className="space-y-1">
-                  <h5 className="text-md font-medium leading-none">
-                    {objective.name}
-                  </h5>
-                  <small className="text-sm text-gray-500 leading-none -mt-1">
-                    {objective.description}
-                  </small>
+              <div className="flex items-center place-content-between">
+                <div className="flex gap-4">
+                  <span className="bg-primary rounded-full h-4 w-4">
+                    
+                  </span>
+                  <div className="">
+                    <h5 className="text-md font-medium leading-none">
+                      {objective.name}
+                    </h5>
+                    <small className="text-sm text-gray-500 leading-none -mt-1">
+                      {objective.description}
+                    </small>
+                  </div>
                 </div>
                 <div>
                   {objective.completed ? (

@@ -55,7 +55,7 @@ export const objectives: Objective[] = [
   {
     id: "7",
     name: "Obtén una tablet",
-    description: "Obtén una tablet en tu inventario",
+    description: "Obtén una tablet en tu inventario.",
     completed: false,
     createdAt: new Date(),
     endTime: null,
@@ -75,7 +75,7 @@ export const objectives: Objective[] = [
   {
     id: "9",
     name: "Ingresa al aula virtual",
-    description: "Ingresa al aula virtual mediante las plataformas",
+    description: "Ingresa al aula virtual mediante las plataformas. Para ello debes usar una de la plataformas dentro del juego e ingresar una URL válida de la UPC similar 'https://upc-adventure.vercel.app/' puedes pedir ayuda a los personajes u obtener la URL por otros medios",
     completed: false,
     createdAt: new Date(),
     endTime: null,
@@ -85,7 +85,7 @@ export const objectives: Objective[] = [
   {
     id: "10",
     name: "Ingresa al intranet",
-    description: "Ingresa a la intranet mediante las plataformas",
+    description: "Ingresa a la intranet mediante las plataformas. Para ello debes usar una de la plataformas dentro del juego e ingresar una URL válida de la UPC similar 'https://upc-adventure.vercel.app/' puedes pedir ayuda a los personajes u obtener la URL por otros medios",
     completed: false,
     createdAt: new Date(),
     endTime: null,
@@ -95,7 +95,7 @@ export const objectives: Objective[] = [
   {
     id: "11",
     name: "Ingresa a mi upc",
-    description: "Ingresa a la mi upc mediante las plataformas",
+    description: "Ingresa a la mi upc mediante las plataformas. Para ello debes usar una de la plataformas dentro del juego e ingresar una URL válida de la UPC similar 'https://upc-adventure.vercel.app/' puedes pedir ayuda a los personajes u obtener la URL por otros medios",
     completed: false,
     createdAt: new Date(),
     endTime: null,
@@ -106,7 +106,7 @@ export const objectives: Objective[] = [
     id: "12",
     name: "Ingresa a 3 plataformas de la upc",
     description:
-      "Ingresa a 3 plataformas de la upc (intranet, aula virtual, matricula upc)",
+      "Ingresa a 3 plataformas de la upc (intranet, aula virtual, matricula upc). Para ello debes usar una de la plataformas dentro del juego e ingresar una URL válida de la UPC similar 'https://upc-adventure.vercel.app/' puedes pedir ayuda a los personajes u obtener la URL por otros medios",
     completed: false,
     createdAt: new Date(),
     endTime: null,
@@ -117,7 +117,7 @@ export const objectives: Objective[] = [
     id: "13",
     name: "Revisa tu horario de estudios",
     description:
-      "Revisa tu horario de clases desde alguna de las plataformas de la upc",
+      "Revisa tu horario de clases desde alguna de las plataformas de la upc. Para ello debes usar una de la plataformas dentro del juego e ingresar una URL válida de la UPC similar 'https://upc-adventure.vercel.app/' puedes pedir ayuda a los personajes u obtener la URL por otros medios",
     completed: false,
     createdAt: new Date(),
     endTime: null,
@@ -128,7 +128,7 @@ export const objectives: Objective[] = [
     id: "14",
     name: "Revisa tus Notas",
     description:
-      "Revisa tu Notas de clases desde alguna de las plataformas de la upc",
+      "Revisa tu Notas de clases desde alguna de las plataformas de la upc. Para ello debes usar una de la plataformas dentro del juego e ingresar una URL válida de la UPC similar 'https://upc-adventure.vercel.app/' puedes pedir ayuda a los personajes u obtener la URL por otros medios",
     completed: false,
     createdAt: new Date(),
     endTime: null,
@@ -138,8 +138,7 @@ export const objectives: Objective[] = [
   {
     id: "15",
     name: "Revisa tus Cursos",
-    description:
-      "Revisa tus cursos desde alguna de las plataformas de la upc",
+    description: "Revisa tus cursos desde alguna de las plataformas de la upc. Para ello debes usar una de la plataformas dentro del juego e ingresar una URL válida de la UPC similar 'https://upc-adventure.vercel.app/' puedes pedir ayuda a los personajes u obtener la URL por otros medios",
     completed: false,
     createdAt: new Date(),
     endTime: null,

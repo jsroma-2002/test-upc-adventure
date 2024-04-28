@@ -1,4 +1,5 @@
-const API_URL = "https://1dc53m87-5000.brs.devtunnels.ms/api/chat";
+const API_URL =
+  "https://modelo-procesamiento-lenguaje-lbpp3pxtwa-uc.a.run.app/api/chat";
 
 export async function GetTeacherResponse(name: string, message: string) {
   const response = await fetch(API_URL, {

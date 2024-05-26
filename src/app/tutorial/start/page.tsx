@@ -24,48 +24,57 @@ const steps = [
   {
     target: "body",
     content: "Bienvenido a la sala de tutorial!",
+    locale: { skip: "Salir del Tutorial" },
     disableBeacon: true,
     placement: "center",
   },
   {
     target: "#firstStep",
+    locale: { skip: "Salir del Tutorial" },
     content: "Este es el botón de guardado, puedes guardar tu progreso",
     disableBeacon: true,
   },
   {
     target: "#secondStep",
+    locale: { skip: "Salir del Tutorial" },
     content:
       "Este es el menu de objetivos, puedes ver tus objetivos actuales y necesarios para completar la sala de tutorial",
     disableBeacon: true,
   },
   {
     target: "#thirdStep",
+    locale: { skip: "Salir del Tutorial" },
     content: "Este es el menu de items donde puedes ver tus items actuales",
     disableBeacon: true,
   },
   {
     target: "body",
+    locale: { skip: "Salir del Tutorial" },
     content: "Revisemos los objetivos para completar la sala de tutorial",
     disableBeacon: true,
     placement: "center",
   },
   {
     target: "#fourthStep",
+    locale: { skip: "Salir del Tutorial" },
     content: "Completemos el primer objetivo",
     disableBeacon: true,
   },
   {
     target: "#thirdStep",
+    locale: { skip: "Salir del Tutorial" },
     content: "Revisemos los items conseguidos",
     disableBeacon: true,
   },
   {
     target: "#thirdStep",
+    locale: { skip: "Salir del Tutorial" },
     content: "Ahora interactuemos con el personaje de la sala de tutorial",
     disableBeacon: true,
   },
   {
     target: "#thirdStep",
+    locale: { skip: "Salir del Tutorial" },
     content:
       "Excelente! Hemos completado los objetivos de la sala de tutorial!",
     disableBeacon: true,
@@ -102,6 +111,11 @@ export default function StartPage() {
   const handleJoyrideCallback = (data: CallBackProps) => {
     const { action, index, origin, status, type, lifecycle } = data;
 
+    //Skip button redirect to home
+    if (action === ACTIONS.SKIP) {
+      router.push("/");
+    }
+
     if (index === 4 && lifecycle === "complete") {
       setRun(false);
     }
@@ -131,6 +145,8 @@ export default function StartPage() {
     <div>
       {run && (
         <Joyride
+          showSkipButton
+          hideCloseButton
           callback={handleJoyrideCallback}
           steps={steps as Step[]}
           stepIndex={stepIndex}

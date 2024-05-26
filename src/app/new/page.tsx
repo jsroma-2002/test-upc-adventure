@@ -47,7 +47,7 @@ const items = [
   },
   {
     id: "3",
-    label: "Procesos de la institución",
+    label: "Normas de la Institución",
   },
   {
     id: "4",

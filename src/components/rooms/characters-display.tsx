@@ -219,7 +219,7 @@ export default function CharactersDisplay({
         />
       ))}
       {showChat && (
-        <section className="w-1/2 right-0 flex flex-col backdrop-blur h-screen fixed p-8 place-content-between border-l">
+        <section className="w-1/2 right-0 flex flex-col backdrop-blur h-screen fixed p-8 place-content-between border-l z-50">
           <Card>
             <CardHeader className="flex flex-row items-center gap-4">
               <Avatar>

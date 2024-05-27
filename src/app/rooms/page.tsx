@@ -247,7 +247,7 @@ export default function RoomsPage() {
         <div className="m-4">
           <ItemsDialog action={useItem} />
         </div>
-        <div className="m-4">
+        <div className="m-4 z-50">
           <CharacterDialog />
         </div>
 
@@ -256,7 +256,7 @@ export default function RoomsPage() {
             <DropdownMenu key={index}>
               <DropdownMenuTrigger>
                 <Image
-                  className="fixed left-52 top-24 hover:scale-105 transition-all cursor-pointer animate-bounce"
+                  className="fixed left-52 top-24 hover:scale-105 transition-all cursor-pointer animate-bounce z-10"
                   src={item.image}
                   alt={"Item"}
                   width={100}

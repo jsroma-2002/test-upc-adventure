@@ -4,9 +4,38 @@ import { Save } from "@/interfaces/entities/save";
 import { LoadSave } from "@/services/shared/storage-service";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 export default function Home() {
   const [save, setSave] = useState<Save | null>(null);
+
+  const [browser, setBrowser] = useState<string>("Google Chrome");
+
+  const getBrowserName = () => {
+    const userAgent = navigator.userAgent;
+    let browserName = "Unknown";
+
+    if (userAgent.indexOf("Firefox") > -1) {
+      browserName = "Mozilla Firefox";
+    } else if (userAgent.indexOf("SamsungBrowser") > -1) {
+      browserName = "Samsung Internet";
+    } else if (
+      userAgent.indexOf("Opera") > -1 ||
+      userAgent.indexOf("OPR") > -1
+    ) {
+      browserName = "Opera";
+    } else if (userAgent.indexOf("Trident") > -1) {
+      browserName = "Microsoft Internet Explorer";
+    } else if (userAgent.indexOf("Edge") > -1) {
+      browserName = "Microsoft Edge";
+    } else if (userAgent.indexOf("Chrome") > -1) {
+      browserName = "Google Chrome";
+    } else if (userAgent.indexOf("Safari") > -1) {
+      browserName = "Safari";
+    }
+
+    setBrowser(browserName);
+  };
 
   useEffect(() => {
     const result = LoadSave();
@@ -15,6 +44,19 @@ export default function Home() {
       setSave(result);
     }
   }, []);
+
+  useEffect(() => {
+    getBrowserName();
+
+    console.log("Browser: ", browser);
+
+    //Get user browser name and log it
+    if (browser !== "Google Chrome" && browser !== "Mozilla Firefox") {
+      toast.error(
+        "Este Navegador no es soportado activamente. Se recomienda usar Google Chrome, Microsoft Edge o Mozilla Firefox"
+      );
+    }
+  }, [browser]);
 
   return (
     <main className="flex h-screen flex-col items-center justify-center p-24">

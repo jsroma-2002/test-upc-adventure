@@ -62,7 +62,7 @@ export default function RoomsPage() {
       case "3":
         setEntranceLocked(false);
         if (coordinateX === "0" && coordinateY === "0") {
-          toast.success("Escenario desbloqueado!");
+          toast.success("Escenario desbloqueado");
           break;
         } else {
           toast.info("Este ítem no puede ser utilizado");

@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="es">
       <body className={dosis.className}>
         {children}
-        <Toaster position="top-center" />
+        <Toaster position="top-center" expand />
       </body>
     </html>
   );
